@@ -10,6 +10,9 @@ Route::get('/search', [PublicController::class, 'search'])->name('search');
 Route::get('/checkout', [PublicController::class, 'checkout'])->name('checkout');
 Route::post('/checkout', [PublicController::class, 'storeCheckout'])->name('checkout.store');
 Route::view('/contact', 'public.contact')->name('contact');
+Route::view('/services', 'public.services')->name('services');
+Route::view('/locations', 'public.locations')->name('locations');
+Route::view('/deals', 'public.deals')->name('deals');
 Route::get('/checkout/success/{booking}', [PublicController::class, 'checkoutSuccess'])->name('checkout.success');
 
 use App\Http\Controllers\Customer\AuthController;

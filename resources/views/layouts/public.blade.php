@@ -16,36 +16,37 @@
     <script src="/lang/en.js"></script>
     <script src="/lang/bn.js"></script>
     
-    <!-- Vue App Initialization -->
     <script>
-        // Set theme immediately to prevent flash
         const currentTheme = localStorage.getItem('theme') || 'light';
         document.documentElement.setAttribute('data-bs-theme', currentTheme);
     </script>
     
     <style>
         :root {
-            /* California Beaches Palette */
-            --theme-color-1: #FFC067;
-            --theme-color-2: #66F4FF;
-            --theme-color-3: #66C4FF;
-            --theme-color-4: #7D99AA;
-
-            /* Override Bootstrap Primary (Using the blue as primary) */
-            --bs-primary: var(--theme-color-3);
-            --bs-primary-rgb: 102, 196, 255;
+            --bs-primary: #333333; /* Charcoal Dark Gray */
+            --bs-primary-rgb: 51, 51, 51;
+            --accent-color: #ff6b00; /* Bright Orange */
+            --accent-color-hover: #e66000;
+            --theme-color-dark: #1a1a1a;
         }
 
         body { 
             font-family: 'Inter', sans-serif;
-            padding-top: 60px;
-            padding-bottom: 60px;
-            background-color: var(--bs-body-bg); 
+            background-color: #f4f5f7; /* Sleek cool gray instead of plain white */
+            background-image: radial-gradient(#e2e8f0 1px, transparent 1px); /* Subtle dot pattern */
+            background-size: 24px 24px;
+            color: #333333;
+            padding-top: 76px;
         }
 
         /* Dark Mode Specific Overrides */
+        [data-bs-theme="dark"] {
+            --bs-primary: #e0e0e0;
+            --bs-primary-rgb: 224, 224, 224;
+        }
         [data-bs-theme="dark"] body {
             background-color: #121212;
+            background-image: radial-gradient(#333333 1px, transparent 1px);
             color: #e0e0e0;
         }
         [data-bs-theme="dark"] .bg-white,
@@ -60,186 +61,136 @@
         [data-bs-theme="dark"] .text-dark {
             color: #e0e0e0 !important;
         }
-        [data-bs-theme="dark"] .border, 
-        [data-bs-theme="dark"] .border-bottom,
-        [data-bs-theme="dark"] .border-top {
-            border-color: #333 !important;
-        }
 
-        /* Polished UI Overrides */
         .btn-primary {
-            background-color: var(--theme-color-3) !important;
-            border-color: var(--theme-color-3) !important;
+            background-color: var(--accent-color) !important;
+            border-color: var(--accent-color) !important;
             color: #fff !important;
-            box-shadow: 0 4px 15px rgba(102, 196, 255, 0.3);
+            box-shadow: 0 4px 10px rgba(255, 107, 0, 0.2);
             transition: all 0.3s ease;
+            border-radius: 8px;
+            font-weight: 700;
         }
         .btn-primary:hover {
-            background-color: #55b3ed !important;
-            transform: translateY(-2px);
-            box-shadow: 0 6px 20px rgba(102, 196, 255, 0.4);
+            background-color: var(--accent-color-hover) !important;
+            transform: translateY(-1px);
+            box-shadow: 0 6px 15px rgba(255, 107, 0, 0.3);
         }
 
         .text-primary {
-            color: var(--theme-color-3) !important;
+            color: var(--bs-primary) !important;
+        }
+        .text-accent {
+            color: var(--accent-color) !important;
         }
         .bg-primary {
-            background-color: var(--theme-color-3) !important;
+            background-color: var(--bs-primary) !important;
+        }
+        .bg-accent {
+            background-color: var(--accent-color) !important;
         }
         
-        .badge.bg-primary {
-            background-color: var(--theme-color-3) !important;
-            color: #fff;
+        .navbar {
+            background-color: #ffffff !important;
+            box-shadow: 0 2px 15px rgba(0,0,0,0.05);
+            transition: all 0.3s ease;
+            padding: 15px 0;
         }
+        [data-bs-theme="dark"] .navbar {
+            background-color: #1a1a1a !important;
+            box-shadow: 0 2px 15px rgba(0,0,0,0.5);
+        }
+        
+        .navbar-brand { font-size: 1.5rem; font-weight: 800; }
+        .nav-link { font-size: 0.95rem; font-weight: 500; color: #4b5563 !important; }
+        .nav-link:hover { color: var(--bs-primary) !important; }
+        [data-bs-theme="dark"] .nav-link { color: #9ca3af !important; }
+        [data-bs-theme="dark"] .nav-link:hover { color: #e5e7eb !important; }
 
-        /* Card Styling */
         .card {
-            border: none !important;
-            border-radius: 16px !important;
-            box-shadow: 0 10px 40px rgba(102, 196, 255, 0.08) !important;
+            border: none;
+            border-radius: 12px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.04);
             transition: transform 0.3s ease, box-shadow 0.3s ease;
-            overflow: hidden;
         }
-        /* Top accent border for all cards */
-        .card::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            height: 4px;
-            background: linear-gradient(90deg, var(--theme-color-1), var(--theme-color-2), var(--theme-color-3), var(--theme-color-4));
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.08);
         }
 
-        /* Sidebar active links */
-        .list-group-item.active {
-            background-color: var(--theme-color-3) !important;
-            border-color: var(--theme-color-3) !important;
-            color: white !important;
+        /* Footer styling */
+        .site-footer {
+            background-color: #ffffff;
+            padding: 60px 0 0 0;
         }
-
-        /* Glassmorphism Navbar */
-        .glass-navbar {
-            background: rgba(255, 255, 255, 0.85) !important;
-            backdrop-filter: blur(15px);
-            -webkit-backdrop-filter: blur(15px);
-            border-bottom: 1px solid rgba(255, 255, 255, 0.3) !important;
-            transition: box-shadow 0.3s ease, background 0.3s ease;
+        [data-bs-theme="dark"] .site-footer {
+            background-color: #1e1e1e;
         }
-        .glass-navbar.scrolled {
-            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.08);
-        }
-        
-        [data-bs-theme="dark"] .glass-navbar {
-            background: rgba(26, 42, 51, 0.85) !important; /* cool dark slate */
-            border-bottom: 1px solid rgba(255, 255, 255, 0.05) !important;
-        }
-        [data-bs-theme="dark"] .glass-navbar.scrolled {
-            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.5);
-        }
-        
-        .navbar-brand { transition: transform 0.3s; }
-        .navbar-brand:hover { transform: scale(1.05); }
-        
-        /* Contact page icons */
-        .bg-primary.rounded-circle {
-            background-color: var(--theme-color-2) !important;
-            color: #000 !important; /* contrast for the bright cyan */
-        }
-        .hero-section {
-            background: linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.7)), url('https://images.unsplash.com/photo-1503377215949-b98fc2062536?q=80&w=2000&auto=format&fit=crop') no-repeat center center;
-            background-size: cover;
+        .footer-bottom {
+            background-color: var(--theme-color-dark);
             color: white;
-            padding: 100px 0;
+            padding: 40px 0 20px 0;
+            margin-top: 40px;
+        }
+        .footer-link {
+            color: #9ca3af;
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+        .footer-link:hover {
+            color: white;
         }
     </style>
 </head>
 <body>
     <div id="app">
         <!-- Navigation -->
-        <nav class="navbar navbar-expand-lg fixed-top glass-navbar shadow-sm" id="publicNavbar">
+        <nav class="navbar navbar-expand-lg fixed-top" id="publicNavbar">
             <div class="container">
-                <a class="navbar-brand fw-bold text-primary fs-4" href="/">Gari Bondhu</a>
+                <a class="navbar-brand text-primary" href="/">Gari Bondhu</a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
                     <span class="navbar-toggler-icon"></span>
                 </button>
                 <div class="collapse navbar-collapse" id="navbarNav">
-                    <!-- Center Links -->
                     <ul class="navbar-nav mx-auto">
-                        <li class="nav-item"><a class="nav-link fw-semibold" href="{{ route('home') }}" data-i18n="nav_home">Home</a></li>
-                        
-                        @auth('web')
-                            <li class="nav-item"><a class="nav-link fw-semibold" href="{{ route('customer.dashboard') }}" data-i18n="nav_dashboard">Dashboard</a></li>
-                        @endauth
-                        
-                        <li class="nav-item"><a class="nav-link fw-semibold" href="{{ route('search') }}" data-i18n="nav_fleet">Fleet</a></li>
-                        <li class="nav-item"><a class="nav-link fw-semibold" href="{{ route('contact') }}" data-i18n="nav_contact">Contact</a></li>
+                        <li class="nav-item"><a class="nav-link" href="{{ route('home') }}" data-i18n="nav_home">Home</a></li>
+                        <li class="nav-item"><a class="nav-link" href="{{ route('search') }}" data-i18n="nav_fleet">Cars</a></li>
+                        <li class="nav-item"><a class="nav-link" href="{{ route('services') }}" data-i18n="nav_services">Services</a></li>
+                        <li class="nav-item"><a class="nav-link" href="{{ route('locations') }}" data-i18n="nav_locations">Locations</a></li>
+                        <li class="nav-item"><a class="nav-link" href="{{ route('deals') }}" data-i18n="nav_deals">Deals</a></li>
+                        <li class="nav-item"><a class="nav-link" href="{{ route('contact') }}" data-i18n="nav_contact">About Us</a></li>
                     </ul>
 
-                    <!-- Right Links -->
                     <ul class="navbar-nav align-items-center">
-                        @auth('web')
-                            @php
-                                $unreadNotifications = auth()->user()->unreadNotifications;
-                            @endphp
-                            <li class="nav-item dropdown me-2">
-                                <a class="nav-link position-relative px-2" href="#" id="customerNotifications" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                    <i class="bi bi-bell-fill fs-5 text-dark"></i>
-                                    @if($unreadNotifications->count() > 0)
-                                        <span class="position-absolute top-25 start-100 translate-middle badge rounded-pill bg-danger" style="font-size: 0.6rem;">
-                                            {{ $unreadNotifications->count() }}
-                                        </span>
-                                    @endif
-                                </a>
-                                <ul class="dropdown-menu dropdown-menu-end shadow" aria-labelledby="customerNotifications" style="width: 320px; max-height: 400px; overflow-y: auto;">
-                                    <li><h6 class="dropdown-header d-flex justify-content-between align-items-center">
-                                        Notifications
-                                        @if($unreadNotifications->count() > 0)
-                                            <form action="{{ route('customer.notifications.markAllRead') }}" method="POST" class="d-inline no-confirm m-0 p-0">
-                                                @csrf
-                                                <button type="submit" class="btn btn-link btn-sm text-decoration-none p-0">Mark all read</button>
-                                            </form>
-                                        @endif
-                                    </h6></li>
-                                    <li><hr class="dropdown-divider"></li>
-                                    @forelse(auth()->user()->notifications()->limit(5)->get() as $notification)
-                                        <li class="{{ $notification->unread() ? 'bg-light' : '' }}">
-                                            <form action="{{ route('customer.notifications.read', $notification->id) }}" method="POST" class="no-confirm m-0 p-0">
-                                                @csrf
-                                                <button type="submit" class="dropdown-item py-2 text-wrap" style="font-size: 0.85rem;">
-                                                    @if($notification->unread()) <span class="badge bg-primary me-1">New</span> @endif
-                                                    <strong>{{ $notification->data['message'] ?? 'New Notification' }}</strong><br>
-                                                    <small class="text-muted">{{ $notification->created_at->diffForHumans() }}</small>
-                                                </button>
-                                            </form>
-                                        </li>
-                                        <li><hr class="dropdown-divider"></li>
-                                    @empty
-                                        <li><span class="dropdown-item text-center text-muted small">No notifications</span></li>
-                                    @endforelse
-                                </ul>
-                            </li>
-                        @endauth
-
-                        <li class="nav-item me-2">
-                            <button id="langTogglePublic" class="btn btn-sm btn-outline-primary fw-bold" title="Toggle Language">BN</button>
-                        </li>
                         <li class="nav-item me-3">
-                            <button id="themeTogglePublic" class="btn btn-link text-primary nav-link fw-bold p-0" title="Toggle Theme">
+                            <a class="nav-link" href="#"><i class="bi bi-question-circle"></i> Help Center</a>
+                        </li>
+                        
+                        <li class="nav-item me-2 d-flex align-items-center">
+                            <button id="langTogglePublic" class="btn btn-sm btn-outline-secondary fw-bold" title="Toggle Language">BN</button>
+                        </li>
+                        <li class="nav-item me-2">
+                            <button id="themeTogglePublic" class="btn btn-link text-dark nav-link p-0" title="Toggle Theme">
                                 <i class="bi bi-moon-stars fs-5"></i>
                             </button>
                         </li>
 
                         @auth('web')
-                            <li class="nav-item border-start ps-3">
+                            <li class="nav-item border-start ps-3 me-2">
+                                <a class="nav-link" href="{{ route('customer.dashboard') }}">Dashboard</a>
+                            </li>
+                            <li class="nav-item">
                                 <form action="{{ route('customer.logout') }}" method="POST" class="d-inline no-confirm">
                                     @csrf
-                                    <button class="btn btn-outline-danger btn-sm fw-bold" data-i18n="nav_logout">Logout</button>
+                                    <button class="btn btn-outline-danger btn-sm" data-i18n="nav_logout">Logout</button>
                                 </form>
                             </li>
                         @else
-                            <li class="nav-item border-start ps-3">
-                                <a class="btn btn-primary btn-sm fw-bold" href="{{ route('login') }}" data-i18n="nav_login">Login / Register</a>
+                            <li class="nav-item border-start ps-3 me-3">
+                                <a class="nav-link fw-bold" href="{{ route('login') }}">Login</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="btn btn-primary px-4" href="{{ route('search') }}">Book Now</a>
                             </li>
                         @endauth
                     </ul>
@@ -253,40 +204,135 @@
         </main>
 
         <!-- Footer -->
-        <footer class="bg-dark text-light py-3 fixed-bottom border-top border-secondary">
-            <div class="container text-center">
-                <p class="mb-0 small">&copy; {{ date('Y') }} <span data-i18n="footer_copy">Gari Bondhu Platform. All rights reserved.</span></p>
+        <footer class="site-footer mt-5">
+            <div class="container text-center mb-5">
+                <h3 class="fw-bold mb-4">How It Works</h3>
+                <p class="text-muted mb-5">Renting a car with Gari Bondhu is simple and hassle-free.</p>
+                <div class="row g-4">
+                    <div class="col-md-3">
+                        <div class="bg-light rounded d-inline-flex align-items-center justify-content-center mb-3" style="width:80px; height:80px; font-size: 2rem;">
+                            📍
+                        </div>
+                        <h6 class="fw-bold">01<br><br>Choose Location</h6>
+                        <p class="text-muted small mt-2">Select your pick-up and drop-off location.</p>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="bg-light rounded d-inline-flex align-items-center justify-content-center mb-3" style="width:80px; height:80px; font-size: 2rem;">
+                            🚗
+                        </div>
+                        <h6 class="fw-bold">02<br><br>Select Car</h6>
+                        <p class="text-muted small mt-2">Browse and select your perfect car.</p>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="bg-light rounded d-inline-flex align-items-center justify-content-center mb-3" style="width:80px; height:80px; font-size: 2rem;">
+                            💳
+                        </div>
+                        <h6 class="fw-bold">03<br><br>Book & Pay</h6>
+                        <p class="text-muted small mt-2">Confirm your booking and make payment.</p>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="bg-light rounded d-inline-flex align-items-center justify-content-center mb-3" style="width:80px; height:80px; font-size: 2rem;">
+                            🔑
+                        </div>
+                        <h6 class="fw-bold">04<br><br>Enjoy the Ride</h6>
+                        <p class="text-muted small mt-2">Pick up your car and enjoy your journey.</p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="footer-bottom">
+                <div class="container">
+                    <div class="row g-4 mb-4">
+                         <div class="col-md-12">
+                             <div class="d-flex justify-content-between align-items-center flex-wrap px-4 py-4 rounded" style="background-color: var(--bs-primary);">
+                                 <div>
+                                     <h4 class="text-white mb-1">Subscribe to Our Newsletter</h4>
+                                     <p class="text-white-50 mb-0">Get the latest deals and offers.</p>
+                                 </div>
+                                 <form class="d-flex gap-2">
+                                     <input type="email" class="form-control" placeholder="Enter your email" style="width: 250px;">
+                                     <button class="btn btn-dark" type="button">Subscribe</button>
+                                 </form>
+                             </div>
+                         </div>
+                    </div>
+
+                    <div class="row g-4">
+                        <div class="col-md-3">
+                            <h4 class="mb-4">Gari Bondhu</h4>
+                            <p class="text-muted small">Your trusted partner for car rentals. Quality cars, affordable prices, great service.</p>
+                            <div class="d-flex gap-3">
+                                <a href="#" class="footer-link"><i class="bi bi-facebook"></i></a>
+                                <a href="#" class="footer-link"><i class="bi bi-twitter"></i></a>
+                                <a href="#" class="footer-link"><i class="bi bi-instagram"></i></a>
+                                <a href="#" class="footer-link"><i class="bi bi-linkedin"></i></a>
+                            </div>
+                        </div>
+                        <div class="col-md-2">
+                            <h6 class="mb-4 text-white">Quick Links</h6>
+                            <ul class="list-unstyled">
+                                <li class="mb-2"><a href="{{ route('home') }}" class="footer-link">Home</a></li>
+                                <li class="mb-2"><a href="{{ route('search') }}" class="footer-link">Cars</a></li>
+                                <li class="mb-2"><a href="{{ route('services') }}" class="footer-link">Services</a></li>
+                                <li class="nav-item"><a href="{{ route('locations') }}" class="footer-link">Locations</a></li>
+                                <li class="mb-2"><a href="{{ route('deals') }}" class="footer-link">Deals</a></li>
+                            </ul>
+                        </div>
+                        <div class="col-md-2">
+                            <h6 class="mb-4 text-white">Company</h6>
+                            <ul class="list-unstyled">
+                                <li class="mb-2"><a href="#" class="footer-link">About Us</a></li>
+                                <li class="mb-2"><a href="#" class="footer-link">Careers</a></li>
+                                <li class="mb-2"><a href="#" class="footer-link">Blog</a></li>
+                                <li class="mb-2"><a href="#" class="footer-link">Press</a></li>
+                                <li class="mb-2"><a href="#" class="footer-link">Contact Us</a></li>
+                            </ul>
+                        </div>
+                        <div class="col-md-2">
+                            <h6 class="mb-4 text-white">Support</h6>
+                            <ul class="list-unstyled">
+                                <li class="mb-2"><a href="#" class="footer-link">Help Center</a></li>
+                                <li class="mb-2"><a href="#" class="footer-link">Terms & Conditions</a></li>
+                                <li class="mb-2"><a href="#" class="footer-link">Privacy Policy</a></li>
+                                <li class="mb-2"><a href="#" class="footer-link">Refund Policy</a></li>
+                                <li class="mb-2"><a href="#" class="footer-link">Sitemap</a></li>
+                            </ul>
+                        </div>
+                        <div class="col-md-3">
+                            <h6 class="mb-4 text-white">Contact Us</h6>
+                            <ul class="list-unstyled text-muted small">
+                                <li class="mb-2"><i class="bi bi-telephone me-2"></i> +880 1234 567890</li>
+                                <li class="mb-2"><i class="bi bi-envelope me-2"></i> support@garibondhu.com</li>
+                                <li class="mb-2 d-flex"><i class="bi bi-geo-alt me-2 mt-1"></i> 123 Road, Dhaka, Bangladesh</li>
+                            </ul>
+                        </div>
+                    </div>
+                    <hr class="mt-4 mb-3 border-secondary">
+                    <div class="text-center text-muted small">
+                        &copy; {{ date('Y') }} Gari Bondhu. All rights reserved.
+                    </div>
+                </div>
             </div>
         </footer>
     </div>
 
     <!-- Vue 3 CDN -->
     <script src="https://unpkg.com/vue@3/dist/vue.global.prod.js"></script>
-    <!-- Axios CDN -->
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
-    <!-- Bootstrap 5 JS -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
     
-    <!-- Vue App Initialization -->
     <script>
         const { createApp, ref, onMounted } = Vue;
-        
-        // Reactive language state for Vue
-        const currentVueLang = ref(localStorage.getItem('lang') || 'bn');
+        const currentVueLang = ref(localStorage.getItem('lang') || 'en');
 
-        const app = createApp({
-            setup() {
-                return {};
-            }
-        });
+        const app = createApp({ setup() { return {}; } });
         
-        // Global translation helper for Vue templates
         app.config.globalProperties.$t = (key) => {
             const lang = currentVueLang.value;
             if (window.translations && window.translations[lang] && window.translations[lang][key]) {
                 return window.translations[lang][key];
             }
-            return key; // fallback
+            return key;
         };
     </script>
     
@@ -295,8 +341,28 @@
     <script>
         app.mount('#app');
 
-        // Theme Toggle Logic
         document.addEventListener('DOMContentLoaded', () => {
+            // Language Toggle
+            const langBtn = document.getElementById('langTogglePublic');
+            const currentLang = localStorage.getItem('lang') || 'en';
+            
+            if (langBtn) {
+                langBtn.textContent = currentLang === 'en' ? 'BN' : 'EN';
+                langBtn.addEventListener('click', () => {
+                    const newLang = localStorage.getItem('lang') === 'bn' ? 'en' : 'bn';
+                    localStorage.setItem('lang', newLang);
+                    window.location.reload();
+                });
+            }
+
+            // Update UI Texts
+            document.querySelectorAll('[data-i18n]').forEach(el => {
+                const key = el.getAttribute('data-i18n');
+                if (window.translations && window.translations[currentLang] && window.translations[currentLang][key]) {
+                    el.textContent = window.translations[currentLang][key];
+                }
+            });
+
             const toggleBtn = document.getElementById('themeTogglePublic');
             if (toggleBtn) {
                 const icon = toggleBtn.querySelector('i');
@@ -312,151 +378,16 @@
                     
                     if(theme === 'dark') {
                         icon.classList.replace('bi-moon-stars', 'bi-sun');
+                        toggleBtn.classList.replace('text-dark', 'text-light');
                     } else {
                         icon.classList.replace('bi-sun', 'bi-moon-stars');
-                    }
-                });
-            }
-        });
-        // Language Toggle Logic
-        document.addEventListener('DOMContentLoaded', () => {
-            const langToggle = document.getElementById('langTogglePublic');
-            let currentLang = localStorage.getItem('lang') || 'bn';
-            
-            // Function to apply translations
-            const applyTranslations = (lang) => {
-                if(!window.translations || !window.translations[lang]) return;
-                
-                const dict = window.translations[lang];
-                document.querySelectorAll('[data-i18n]').forEach(el => {
-                    const key = el.getAttribute('data-i18n');
-                    if(dict[key]) {
-                        el.innerText = dict[key];
-                    }
-                });
-                
-                if(langToggle) {
-                    langToggle.innerText = lang === 'en' ? 'BN' : 'EN';
-                }
-                
-                // Expose to Vue
-                if(typeof currentVueLang !== 'undefined') {
-                    currentVueLang.value = lang;
-                }
-            };
-            
-            // Initial application
-            setTimeout(() => applyTranslations(currentLang), 100);
-
-            if(langToggle) {
-                langToggle.addEventListener('click', () => {
-                    currentLang = currentLang === 'en' ? 'bn' : 'en';
-                    localStorage.setItem('lang', currentLang);
-                    applyTranslations(currentLang);
-                });
-            }
-
-            // Navbar Scroll Effect
-            const navbar = document.getElementById('publicNavbar');
-            if(navbar) {
-                window.addEventListener('scroll', () => {
-                    if (window.scrollY > 10) {
-                        navbar.classList.add('scrolled');
-                    } else {
-                        navbar.classList.remove('scrolled');
+                        toggleBtn.classList.replace('text-light', 'text-dark');
                     }
                 });
             }
         });
     </script>
-
-    <!-- SweetAlert2 -->
+    
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-    <script>
-        document.addEventListener('DOMContentLoaded', function () {
-            @if(session('success'))
-                Swal.fire({
-                    icon: 'success',
-                    title: '{{ __("Success!") }}',
-                    text: "{{ session('success') }}",
-                    showConfirmButton: false,
-                    timer: 3000,
-                    toast: true,
-                    position: 'top-end',
-                    background: '#198754',
-                    color: '#fff',
-                    iconColor: '#fff',
-                    showClass: { popup: 'animate__animated animate__fadeInDown' },
-                    hideClass: { popup: 'animate__animated animate__fadeOutUp' }
-                });
-            @endif
-
-            @if(session('error'))
-                Swal.fire({
-                    icon: 'error',
-                    title: '{{ __("Oops...") }}',
-                    text: "{{ session('error') }}",
-                    showConfirmButton: true,
-                    confirmButtonColor: '#fff',
-                    background: '#dc3545',
-                    color: '#fff',
-                    iconColor: '#fff',
-                    customClass: { confirmButton: 'btn btn-outline-light' },
-                    showClass: { popup: 'animate__animated animate__shakeX' }
-                });
-            @endif
-            
-            @if($errors->any())
-                let errorHtml = '<ul class="text-start mb-0">';
-                @foreach($errors->all() as $error)
-                    errorHtml += '<li>{{ $error }}</li>';
-                @endforeach
-                errorHtml += '</ul>';
-                
-                Swal.fire({
-                    icon: 'error',
-                    title: '{{ __("Validation Error") }}',
-                    html: errorHtml,
-                    showConfirmButton: true,
-                    confirmButtonColor: '#fff',
-                    background: '#dc3545',
-                    color: '#fff',
-                    iconColor: '#fff',
-                    customClass: { confirmButton: 'btn btn-outline-light' },
-                    showClass: { popup: 'animate__animated animate__shakeX' }
-                });
-            @endif
-
-            // Global Form Submit SweetAlert Confirmation
-            const allPostForms = document.querySelectorAll('form[method="POST"]');
-            allPostForms.forEach(form => {
-                if(form.classList.contains('no-confirm')) return;
-                
-                form.addEventListener('submit', function(e) {
-                    e.preventDefault();
-                    
-                    let isDelete = form.classList.contains('delete-form') || form.querySelector('input[name="_method"][value="DELETE"]');
-                    let actionText = isDelete ? "You won't be able to revert this!" : "Do you want to save these changes?";
-                    let confirmText = isDelete ? "Yes, delete it!" : "Yes, save it!";
-                    let iconType = isDelete ? "warning" : "question";
-                    let confirmColor = isDelete ? '#dc3545' : '#198754';
-                    
-                    Swal.fire({
-                        title: 'Are you sure?',
-                        text: actionText,
-                        icon: iconType,
-                        showCancelButton: true,
-                        confirmButtonColor: confirmColor,
-                        cancelButtonColor: '#6c757d',
-                        confirmButtonText: confirmText
-                    }).then((result) => {
-                        if (result.isConfirmed) {
-                            form.submit();
-                        }
-                    });
-                });
-            });
-        });
-    </script>
 </body>
 </html>
