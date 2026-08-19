@@ -3,29 +3,55 @@
 @section('content')
 <!-- Hero Section -->
 <section class="hero-section position-relative overflow-hidden" style="padding: 120px 0 80px 0; min-height: 80vh;">
+
     <!-- Abstract Background Elements -->
     <div class="position-absolute" style="top: -100px; left: -100px; width: 400px; height: 400px; background: rgba(26, 86, 219, 0.05); border-radius: 50%; filter: blur(40px);"></div>
     <div class="position-absolute" style="bottom: 100px; right: -50px; width: 300px; height: 300px; background: rgba(26, 86, 219, 0.08); border-radius: 50%; filter: blur(30px);"></div>
 
     <div class="container position-relative z-index-1">
-        <div class="text-center mb-5">
-            <h1 class="display-3 fw-bold text-dark mb-4" style="letter-spacing: -1px;">
-                <span data-i18n="hero_title">Find Your Perfect Car</span><br>
-                <span class="text-accent" data-i18n="hero_subtitle_accent">Anytime, Anywhere.</span>
-            </h1>
-            <p class="lead text-muted mx-auto" style="max-width: 600px;" data-i18n="hero_desc">
-                Wide range of cars. Best prices. Easy booking. Your journey starts here.
-            </p>
-        </div>
-        
-        <!-- Search Widget (Vue) -->
-        <div class="mb-5 position-relative z-index-2">
-            <booking-widget :locations="{{ $locations->toJson() }}"></booking-widget>
+        <div class="position-relative mb-5 py-4">
+            <!-- Background Image Carousel -->
+            <div id="heroBgCarousel" class="carousel slide carousel-fade position-absolute w-100 h-100 rounded-4 overflow-hidden" data-bs-ride="carousel" style="top: 0; left: 0; z-index: 0; opacity: 0.15; pointer-events: none;">
+                <div class="carousel-inner h-100">
+                    <div class="carousel-item active h-100">
+                        <img src="{{ asset('images/1.jpg') }}" class="d-block w-100 h-100" style="object-fit: cover;" alt="Bg 1">
+                    </div>
+                    <div class="carousel-item h-100">
+                        <img src="{{ asset('images/2.jpg') }}" class="d-block w-100 h-100" style="object-fit: cover;" alt="Bg 2">
+                    </div>
+                    <div class="carousel-item h-100">
+                        <img src="{{ asset('images/3.jpg') }}" class="d-block w-100 h-100" style="object-fit: cover;" alt="Bg 3">
+                    </div>
+                    <div class="carousel-item h-100">
+                        <img src="{{ asset('images/4.jpg') }}" class="d-block w-100 h-100" style="object-fit: cover;" alt="Bg 4">
+                    </div>
+                    <div class="carousel-item h-100">
+                        <img src="{{ asset('images/5.jpg') }}" class="d-block w-100 h-100" style="object-fit: cover;" alt="Bg 5">
+                    </div>
+                </div>
+            </div>
+
+            <div class="position-relative z-index-1">
+                <div class="text-center mb-5 mt-4">
+                    <h1 class="display-3 fw-bold text-dark mb-4" style="letter-spacing: -1px;">
+                        <span data-i18n="hero_title">Find Your Perfect Car</span><br>
+                        <span class="text-accent" data-i18n="hero_subtitle_accent">Anytime, Anywhere.</span>
+                    </h1>
+                    <p class="lead text-muted mx-auto" style="max-width: 600px;" data-i18n="hero_desc">
+                        Wide range of cars. Best prices. Easy booking. Your journey starts here.
+                    </p>
+                </div>
+                
+                <!-- Search Widget (Vue) -->
+                <div class="position-relative z-index-2">
+                    <booking-widget :locations="{{ $locations->toJson() }}"></booking-widget>
+                </div>
+            </div>
         </div>
 
         <!-- Hero Car Image -->
         <div class="text-center mt-4">
-            <img src="https://images.unsplash.com/photo-1550428590-50d4f3b79410?q=80&w=1200&auto=format&fit=crop" alt="Premium Car" class="img-fluid rounded-4 shadow-lg" style="max-height: 400px; object-fit: cover; width: 100%; max-width: 1000px;">
+            <img src="{{ asset('images/premium-car-banner.jpg') }}" alt="Premium Car" class="img-fluid rounded-4 shadow-lg" style="max-height: 400px; object-fit: cover; width: 100%; max-width: 1000px;">
         </div>
     </div>
 </section>
@@ -137,29 +163,29 @@
         <h2 class="fw-bold mb-5" data-i18n="why_title">Why Choose Gari Bondhu?</h2>
         <div class="row g-4">
             <div class="col-md-3">
-                <div class="mb-3 d-inline-flex bg-primary bg-opacity-10 text-primary p-3 rounded-circle">
-                    <i class="bi bi-wallet2 fs-4"></i>
+                <div class="mb-3 d-inline-flex bg-primary text-white p-3 rounded-circle">
+                    <i class="bi bi-cash-stack fs-4"></i>
                 </div>
                 <h6 class="fw-bold" data-i18n="why_1_title">No Hidden Charges</h6>
                 <p class="text-muted small" data-i18n="why_1_desc">What you see is what you pay.</p>
             </div>
             <div class="col-md-3">
-                <div class="mb-3 d-inline-flex bg-primary bg-opacity-10 text-primary p-3 rounded-circle">
-                    <i class="bi bi-calendar-x fs-4"></i>
+                <div class="mb-3 d-inline-flex bg-primary text-white p-3 rounded-circle">
+                    <i class="bi bi-x-circle fs-4"></i>
                 </div>
                 <h6 class="fw-bold" data-i18n="why_2_title">Free Cancellation</h6>
                 <p class="text-muted small" data-i18n="why_2_desc">Up to 24 hours before pick-up.</p>
             </div>
             <div class="col-md-3">
-                <div class="mb-3 d-inline-flex bg-primary bg-opacity-10 text-primary p-3 rounded-circle">
-                    <i class="bi bi-shield-check fs-4"></i>
+                <div class="mb-3 d-inline-flex bg-primary text-white p-3 rounded-circle">
+                    <i class="bi bi-shield-fill fs-4"></i>
                 </div>
                 <h6 class="fw-bold" data-i18n="why_3_title">Clean & Safe Cars</h6>
                 <p class="text-muted small" data-i18n="why_3_desc">Sanitized for your safety.</p>
             </div>
             <div class="col-md-3">
-                <div class="mb-3 d-inline-flex bg-primary bg-opacity-10 text-primary p-3 rounded-circle">
-                    <i class="bi bi-star fs-4"></i>
+                <div class="mb-3 d-inline-flex bg-primary text-white p-3 rounded-circle">
+                    <i class="bi bi-people-fill fs-4"></i>
                 </div>
                 <h6 class="fw-bold" data-i18n="why_4_title">Trusted by 10K+</h6>
                 <p class="text-muted small" data-i18n="why_4_desc">Happy customers worldwide.</p>
@@ -266,7 +292,7 @@
     <div class="container">
         <div class="row align-items-center bg-white rounded-4 shadow-sm overflow-hidden border">
             <div class="col-md-6 p-5 text-center text-md-start">
-                <h2 class="fw-bold mb-3" data-i18n="app_title">Download Gari Bondhu App<br>For Exclusive Deals</h2>
+                <h2 class="fw-bold mb-3" data-i18n="app_title">Download Gari Bondhu App For Exclusive Deals</h2>
                 <p class="text-muted mb-4" data-i18n="app_desc">Get the best car rental experience right from your phone. Download our app and get an extra 20% off your first booking.</p>
                 <div class="d-flex gap-3 justify-content-center justify-content-md-start">
                     <a href="#" class="btn btn-dark px-4 py-2 rounded-pill"><i class="bi bi-apple me-2"></i> App Store</a>
